@@ -1,49 +1,45 @@
-const nomeAnimale = document.getElementById("Nome-Animale");
-const nomePadrone = document.getElementById("Nome-Padrone");
-const specie = document.getElementById("Specie");
-const razza = document.getElementById("Razza");
-const main = document.querySelector("main");
-// const nomeAnimale = document.querySelector("#Nome-Animale");
+// DICHIARAZIONI GENERALI
+const nameAnimal = document.getElementById("Name");
+const nameOwner = document.getElementById("Owner");
+const species = document.getElementById("Species");
+const breed = document.getElementById("Breed");
+const allPets = document.getElementById("All-pets");
+const arrayOfAnimals = [];
+const arrayBoolean = [];
 
+// COSTRUTTORE OGGETTI PET
 class Pet {
-  constructor(_petName = "", _ownerName = "", _species = "", _breed = "") {
-    this.petName = _petName;
-    this.ownerName = _ownerName;
+  constructor(_petName, _ownerName, _species, _breed) {
+    this.name = _petName;
+    this.owner = _ownerName;
     this.species = _species;
     this.breed = _breed;
   }
-
-  sameOwner(_pet2) {
-    if (this.ownerName === _pet2.ownerName) {
-      return true;
-    } else {
-      return false;
-    }
-  }
 }
 
-document.querySelector("#button").onclick = function (e) {
-  // preveniamo l'evento di default con conseguente reload della pagina
-  // e.preventDefault();
-  let nomePet = nomeAnimale.value;
-  nomePet = new Pet(
-    nomeAnimale.value,
-    nomePadrone.value,
-    specie.value,
-    razza.value
-  );
-  main.innerHTML += `<div>
-    <p>Nome Animale: ${nomePet.petName} </p>
-    <p>Nome Padrone: ${nomePet.ownerName} </p>
-    <p>Specie: ${nomePet.species} </p>
-    <p>Razza: ${nomePet.breed} </p>
-    </div>`;
+// PREVENIRE COMPORTAMENTO DI DEFAULT DEL FORM
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelector("#Form").onsubmit = function (e) {
+    // preveniamo l'evento di default con conseguente reload della pagina
+    e.preventDefault();
+    // CODICE DEL SITO
 
-  console.log("pippo");
-  //   nomeAnimale.innerText = "";
-  //   nomePadrone.innerText = "";
-  //   specie.innerText = "";
-  //   razza.innerText = "";
-};
+    // CREO L'OGGETTO PET PER OGNI VOLTA CHE SI PREME IL SUBMIT
+    let nameObj = nameAnimal.value;
+    nameObj = new Pet(
+      nameAnimal.value,
+      nameOwner.value,
+      species.value,
+      breed.value
+    );
 
-console.log(main);
+    // AGGIUNGO IL NUOVO OGGETTO PET AD UN ARRAY DI OGGETTI
+    arrayOfAnimals.push(nameObj);
+    console.log(arrayOfAnimals);
+
+    // STAMPO TUTTO IN UNA LISTA
+    const li = document.createElement("li");
+    li.innerText = `Nome Animale: ${nameAnimal.value}, Nome Proprietario: ${nameOwner.value}, Specie: ${species.value}, Razza: ${breed.value} `;
+    allPets.appendChild(li);
+  };
+});
